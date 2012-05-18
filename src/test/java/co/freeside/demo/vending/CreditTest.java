@@ -15,7 +15,7 @@ public class CreditTest {
         this.coins = coins;
     }
 
-    private VendingMachine machine = new VendingMachine();
+    private VendingMachine machine = new VendingMachine(null);
     private Coin[] coins;
 
     @Parameters

@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 @RunWith(Theories.class)
 public class CreditTheory {
 
-    private VendingMachine machine = new VendingMachine();
+    private VendingMachine machine = new VendingMachine(null);
 
     @DataPoints
     public static Coin[][] data() {

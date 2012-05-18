@@ -1,29 +1,57 @@
 package co.freeside.demo.vending;
 
-import java.util.*;
+import org.jmock.*;
 import org.junit.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static co.freeside.demo.vending.Coin.*;
 
 public class CoinReturnTest {
 
-    private VendingMachine machine = new VendingMachine();
+	private Mockery context = new Mockery();
 
     @Test
     public void machineReturnsNoCoinsIfNoneAreInserted() {
-        assertThat(machine.returnCoins().size(), equalTo(0));
+		final CoinDispenser coinDispenser = context.mock(CoinDispenser.class);
+		VendingMachine machine = new VendingMachine(coinDispenser);
+
+		context.checking(new Expectations() {{
+			never(coinDispenser).dispense(with(any(Coin.class)));
+		}});
+
+		machine.returnCoins();
+
+		context.assertIsSatisfied();
+	}
+
+    @Test
+    public void machineReturnsCoin() {
+		final CoinDispenser coinDispenser = context.mock(CoinDispenser.class);
+		VendingMachine machine = new VendingMachine(coinDispenser);
+
+		context.checking(new Expectations() {{
+			oneOf(coinDispenser).dispense(Penny);
+		}});
+
+		machine.insertCoin(Penny);
+        machine.returnCoins();
+
+		context.assertIsSatisfied();
     }
 
     @Test
-    public void machineReturnsCoinsToSameValueInserted() {
-        machine.insertCoin(Coin.Penny);
-        machine.insertCoin(Coin.Dime);
+    public void machineReturnsEfficientChange() {
+		final CoinDispenser coinDispenser = context.mock(CoinDispenser.class);
+		VendingMachine machine = new VendingMachine(coinDispenser);
 
-        Collection<Coin> coins = machine.returnCoins();
+		context.checking(new Expectations() {{
+			oneOf(coinDispenser).dispense(Dime);
+			oneOf(coinDispenser).dispense(Nickel);
+			exactly(2).of(coinDispenser).dispense(Penny);
+		}});
 
-        int returnedValue = 0;
-        for (Coin coin : coins) returnedValue += coin.getValue();
-        assertThat(returnedValue, equalTo(11));
+		for (int i = 0; i < 17; i++) machine.insertCoin(Penny);
+        machine.returnCoins();
+
+		context.assertIsSatisfied();
     }
 
 }
