@@ -11,11 +11,11 @@ public class CoinReturnTest {
 
     @Test
     public void machineReturnsNoCoinsIfNoneAreInserted() {
-		final CoinDispenser coinDispenser = context.mock(CoinDispenser.class);
-		VendingMachine machine = new VendingMachine(coinDispenser);
+		final HardwareDevice hardware = context.mock(HardwareDevice.class);
+		VendingMachine machine = new VendingMachine(hardware);
 
 		context.checking(new Expectations() {{
-			never(coinDispenser).dispense(with(any(Coin.class)));
+			never(hardware).dispense(with(any(Coin.class)));
 		}});
 
 		machine.returnCoins();
@@ -25,11 +25,11 @@ public class CoinReturnTest {
 
     @Test
     public void machineReturnsCoin() {
-		final CoinDispenser coinDispenser = context.mock(CoinDispenser.class);
-		VendingMachine machine = new VendingMachine(coinDispenser);
+		final HardwareDevice hardware = context.mock(HardwareDevice.class);
+		VendingMachine machine = new VendingMachine(hardware);
 
 		context.checking(new Expectations() {{
-			oneOf(coinDispenser).dispense(Penny);
+			oneOf(hardware).dispense(Penny);
 		}});
 
 		machine.insertCoin(Penny);
@@ -40,14 +40,14 @@ public class CoinReturnTest {
 
     @Test
     public void machineReturnsEfficientChange() {
-		final CoinDispenser coinDispenser = context.mock(CoinDispenser.class);
-		VendingMachine machine = new VendingMachine(coinDispenser);
+		final HardwareDevice hardware = context.mock(HardwareDevice.class);
+		VendingMachine machine = new VendingMachine(hardware);
 		machine.loadChange(Arrays.asList(Quarter, Dime, Nickel));
 
 		context.checking(new Expectations() {{
-			oneOf(coinDispenser).dispense(Dime);
-			oneOf(coinDispenser).dispense(Nickel);
-			exactly(2).of(coinDispenser).dispense(Penny);
+			oneOf(hardware).dispense(Dime);
+			oneOf(hardware).dispense(Nickel);
+			exactly(2).of(hardware).dispense(Penny);
 		}});
 
 		for (int i = 0; i < 17; i++) machine.insertCoin(Penny);
@@ -58,11 +58,11 @@ public class CoinReturnTest {
 
     @Test
     public void machineReturnsAvailableChange() {
-		final CoinDispenser coinDispenser = context.mock(CoinDispenser.class);
-		VendingMachine machine = new VendingMachine(coinDispenser);
+		final HardwareDevice hardware = context.mock(HardwareDevice.class);
+		VendingMachine machine = new VendingMachine(hardware);
 
 		context.checking(new Expectations() {{
-			exactly(6).of(coinDispenser).dispense(Penny);
+			exactly(6).of(hardware).dispense(Penny);
 		}});
 
 		for (int i = 0; i < 6; i++) machine.insertCoin(Penny);

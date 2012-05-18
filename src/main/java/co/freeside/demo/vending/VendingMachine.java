@@ -8,12 +8,13 @@ import com.google.common.collect.*;
  */
 public class VendingMachine {
 
-	private CoinDispenser coinDispenser;
+	private Multiset<Product> stock = EnumMultiset.create(Product.class);
 	private Multiset<Coin> change = EnumMultiset.create(Coin.class);
+	private HardwareDevice hardware;
 	private int credit = 0;
 
-	VendingMachine(CoinDispenser coinDispenser) {
-		this.coinDispenser = coinDispenser;
+	VendingMachine(HardwareDevice hardware) {
+		this.hardware = hardware;
 	}
 
 	/**
@@ -49,7 +50,7 @@ public class VendingMachine {
 		while (credit > 0) {
 			Coin coin = removeLargestCoinFromChange(credit);
 			credit -= coin.getValue();
-			coinDispenser.dispense(coin);
+			hardware.dispense(coin);
 		}
 	}
 
