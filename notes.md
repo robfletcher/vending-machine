@@ -21,3 +21,4 @@ This test used `@RunWith(Parameterized.class)`
 ## `CoinReturnTest`
 
 - Have to declare expectations in advance. Spock's format feels more natural.
+- Spock mocks can perform default actions without expectations being set.

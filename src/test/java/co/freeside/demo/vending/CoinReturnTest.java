@@ -1,9 +1,10 @@
 package co.freeside.demo.vending;
 
-import java.util.*;
 import org.jmock.*;
 import org.junit.*;
 import static co.freeside.demo.vending.Coin.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 public class CoinReturnTest {
 
@@ -39,10 +40,25 @@ public class CoinReturnTest {
     }
 
     @Test
+    public void machineDeductsReturnedCoinFromCredit() {
+		final HardwareDevice hardware = context.mock(HardwareDevice.class);
+		VendingMachine machine = new VendingMachine(hardware);
+
+		context.checking(new Expectations() {{
+			allowing(hardware).dispense(Penny);
+		}});
+
+		machine.insertCoin(Penny);
+        machine.returnCoins();
+
+		assertThat(machine.readCredit(), equalTo(0));
+    }
+
+    @Test
     public void machineReturnsEfficientChange() {
 		final HardwareDevice hardware = context.mock(HardwareDevice.class);
 		VendingMachine machine = new VendingMachine(hardware);
-		machine.loadChange(Arrays.asList(Quarter, Dime, Nickel));
+		machine.loadChange(Quarter, Dime, Nickel);
 
 		context.checking(new Expectations() {{
 			oneOf(hardware).dispense(Dime);
@@ -54,7 +70,7 @@ public class CoinReturnTest {
         machine.returnCoins();
 
 		context.assertIsSatisfied();
-    }
+	}
 
     @Test
     public void machineReturnsAvailableChange() {
