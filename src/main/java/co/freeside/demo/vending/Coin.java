@@ -1,6 +1,7 @@
 package co.freeside.demo.vending;
 
 import java.util.*;
+import javax.annotation.*;
 import com.google.common.base.*;
 import com.google.common.collect.*;
 
@@ -18,39 +19,20 @@ public enum Coin {
 		return value;
 	}
 
-	private static final Ordering<Coin> DESCENDING_VALUE_ORDER = new Ordering<Coin>() {
+	public static final Ordering<Coin> MOST_VALUABLE_FIRST = new Ordering<Coin>() {
 		@Override
 		public int compare(Coin left, Coin right) {
 			return left.getValue() - right.getValue();
 		}
 	};
 
-	/**
-	 * Gets a collection of coins that add up to the value of `value`.
-	 */
-	public static Collection<Coin> getCoinsToValue(int value) {
-		Collection<Coin> coins = EnumMultiset.create(Coin.class);
-		while (value > 0) {
-			Collection<Coin> smallerCoins = Collections2.filter(Arrays.asList(values()), new MaxValuePredicate(value));
-			Coin biggestSmallerCoin = DESCENDING_VALUE_ORDER.max(smallerCoins);
-			coins.add(biggestSmallerCoin);
-			value -= biggestSmallerCoin.getValue();
-		}
-		return coins;
-	}
-
-	private static class MaxValuePredicate implements Predicate<Coin> {
-
-		private final int maxValue;
-
-		private MaxValuePredicate(int maxValue) {
-			this.maxValue = maxValue;
-		}
-
-		@Override
-		public boolean apply(Coin input) {
-			return input.getValue() <= maxValue;
-		}
+	public static Predicate<Coin> maxValuePredicate(final int maxValue) {
+		return new Predicate<Coin>() {
+			@Override
+			public boolean apply(Coin input) {
+				return input.getValue() <= maxValue;
+			}
+		};
 	}
 
 }
