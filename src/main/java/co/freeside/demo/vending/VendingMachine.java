@@ -25,11 +25,42 @@ public class VendingMachine {
 	}
 
 	/**
+	 * @return `true` if the product is in stock, `false` otherwise.
+	 */
+	boolean hasInStock(Product product) {
+		return stock.contains(product);
+	}
+
+	/**
 	 * Inserts a coin adding to credit.
 	 */
 	void insertCoin(Coin coin) {
 		change.add(coin);
 		credit += coin.getValue();
+	}
+
+	/**
+	 * Purchases a product, deducting its price from the current credit.
+	 */
+	void purchase(Product product) throws OutOfStockException {
+		if (credit < product.getPrice()) throw new InsufficientCreditException(credit, product);
+		if (!stock.remove(product)) throw new OutOfStockException(product);
+		credit -= product.getPrice();
+		hardware.dispense(product);
+	}
+
+	/**
+	 * Loads stock into the machine.
+	 */
+	public void addStock(Collection<Product> products) {
+		stock.addAll(products);
+	}
+
+	/**
+	 * Loads stock into the machine.
+	 */
+	public void addStock(Product... products) {
+		addStock(Arrays.asList(products));
 	}
 
 	/**
@@ -40,10 +71,10 @@ public class VendingMachine {
 	}
 
 	/**
-	 * Purchases a product, deducting its price from the current credit.
+	 * Loads change into the machine without adding to credit.
 	 */
-	void purchase(Product product) {
-
+	void loadChange(Coin... coins) {
+		loadChange(Arrays.asList(coins));
 	}
 
 	void returnCoins() {

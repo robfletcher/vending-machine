@@ -1,7 +1,5 @@
 package co.freeside.demo.vending;
 
-import java.util.*;
-import javax.annotation.*;
 import com.google.common.base.*;
 import com.google.common.collect.*;
 
