@@ -22,3 +22,9 @@ This test used `@RunWith(Parameterized.class)`
 
 - Have to declare expectations in advance. Spock's format feels more natural.
 - Spock mocks can perform default actions without expectations being set.
+
+# Exception handling
+
+## `VendingTest`
+
+- don't need try/catch block

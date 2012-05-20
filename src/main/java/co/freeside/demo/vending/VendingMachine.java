@@ -64,6 +64,13 @@ public class VendingMachine {
 	}
 
 	/**
+	 * Loads stock into the machine.
+	 */
+	public void addStock(int num, Product product) {
+		addStock(Collections.nCopies(num, product));
+	}
+
+	/**
 	 * Loads change into the machine without adding to credit.
 	 */
 	void loadChange(Collection<Coin> coins) {
@@ -78,18 +85,26 @@ public class VendingMachine {
 	}
 
 	void returnCoins() {
-		while (credit > 0) {
-			Coin coin = removeLargestCoinFromChange(credit);
-			credit -= coin.getValue();
-			hardware.dispense(coin);
+		try {
+			while (credit > 0) {
+				Coin coin = removeLargestCoinFromChange(credit);
+				credit -= coin.getValue();
+				hardware.dispense(coin);
+			}
+		} catch (CannotMakeChangeException e) {
+
 		}
 	}
 
 	private Coin removeLargestCoinFromChange(int maxValue) {
 		Collection<Coin> smallerCoins = Collections2.filter(change, Coin.maxValuePredicate(maxValue));
-		Coin biggestSmallerCoin = Coin.MOST_VALUABLE_FIRST.max(smallerCoins);
-		assert change.remove(biggestSmallerCoin);
-		return biggestSmallerCoin;
+		if (smallerCoins.isEmpty()) {
+			throw new CannotMakeChangeException(maxValue);
+		} else {
+			Coin biggestSmallerCoin = Coin.MOST_VALUABLE_FIRST.max(smallerCoins);
+			assert change.remove(biggestSmallerCoin);
+			return biggestSmallerCoin;
+		}
 	}
 
 }

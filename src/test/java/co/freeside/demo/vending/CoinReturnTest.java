@@ -3,6 +3,7 @@ package co.freeside.demo.vending;
 import org.jmock.*;
 import org.junit.*;
 import static co.freeside.demo.vending.Coin.*;
+import static co.freeside.demo.vending.Product.ChocolateSaltyBalls;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
@@ -86,5 +87,24 @@ public class CoinReturnTest {
 
 		context.assertIsSatisfied();
     }
+
+	@Test
+	public void machineRetainsCreditIfItCannotMakeChange() {
+		final HardwareDevice hardware = context.mock(HardwareDevice.class);
+		VendingMachine machine = new VendingMachine(hardware);
+		machine.addStock(ChocolateSaltyBalls);
+
+		context.checking(new Expectations() {{
+			oneOf(hardware).dispense(ChocolateSaltyBalls);
+			never(hardware).dispense(with(any(Coin.class)));
+		}});
+
+		for (int i = 0; i < 4; i++) machine.insertCoin(Quarter);
+		machine.purchase(ChocolateSaltyBalls);
+		machine.returnCoins();
+
+		context.assertIsSatisfied();
+		assertThat(machine.readCredit(), equalTo(100 - ChocolateSaltyBalls.getPrice()));
+	}
 
 }
