@@ -84,6 +84,13 @@ public class VendingMachine {
 		loadChange(Arrays.asList(coins));
 	}
 
+	/**
+	 * Loads change into the machine without adding to credit.
+	 */
+	void loadChange(int num, Coin coin) {
+		loadChange(Collections.nCopies(num, coin));
+	}
+
 	void returnCoins() {
 		try {
 			while (credit > 0) {

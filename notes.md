@@ -1,3 +1,7 @@
+# Test structure
+
+- Separation of given/when/then/cleanup gives real clarity to tests.
+
 # Paramaterized tests
 
 - Both have the flaw that all tests have to use the parameters; you can't mix parameterized and regular tests.
@@ -28,3 +32,12 @@ This test used `@RunWith(Parameterized.class)`
 ## `VendingTest`
 
 - don't need try/catch block
+
+# Stepwise
+
+- talk about downsides - violation of OCP
+- good for telling a story
+
+## TransactionStoryTest
+
+- a run-on sentence
