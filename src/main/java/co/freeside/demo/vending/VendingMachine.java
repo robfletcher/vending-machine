@@ -96,7 +96,7 @@ public class VendingMachine {
 			while (credit > 0) {
 				Coin coin = removeLargestCoinFromChange(credit);
 				credit -= coin.getValue();
-				hardware.dispense(coin);
+				hardware.returnCoin(coin);
 			}
 		} catch (CannotMakeChangeException e) {
 

@@ -6,6 +6,6 @@ package co.freeside.demo.vending;
 public interface HardwareDevice {
 
 	void dispense(Product product);
-	void dispense(Coin coin);
+	void returnCoin(Coin coin);
 
 }

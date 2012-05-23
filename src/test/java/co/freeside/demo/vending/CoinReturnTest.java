@@ -17,7 +17,7 @@ public class CoinReturnTest {
 		VendingMachine machine = new VendingMachine(hardware);
 
 		context.checking(new Expectations() {{
-			never(hardware).dispense(with(any(Coin.class)));
+			never(hardware).returnCoin(with(any(Coin.class)));
 		}});
 
 		machine.returnCoins();
@@ -31,7 +31,7 @@ public class CoinReturnTest {
 		VendingMachine machine = new VendingMachine(hardware);
 
 		context.checking(new Expectations() {{
-			oneOf(hardware).dispense(Penny);
+			oneOf(hardware).returnCoin(Penny);
 		}});
 
 		machine.insertCoin(Penny);
@@ -46,7 +46,7 @@ public class CoinReturnTest {
 		VendingMachine machine = new VendingMachine(hardware);
 
 		context.checking(new Expectations() {{
-			allowing(hardware).dispense(Penny);
+			allowing(hardware).returnCoin(Penny);
 		}});
 
 		machine.insertCoin(Penny);
@@ -62,9 +62,9 @@ public class CoinReturnTest {
 		machine.loadChange(Quarter, Dime, Nickel);
 
 		context.checking(new Expectations() {{
-			oneOf(hardware).dispense(Dime);
-			oneOf(hardware).dispense(Nickel);
-			exactly(2).of(hardware).dispense(Penny);
+			oneOf(hardware).returnCoin(Dime);
+			oneOf(hardware).returnCoin(Nickel);
+			exactly(2).of(hardware).returnCoin(Penny);
 		}});
 
 		for (int i = 0; i < 17; i++) machine.insertCoin(Penny);
@@ -79,7 +79,7 @@ public class CoinReturnTest {
 		VendingMachine machine = new VendingMachine(hardware);
 
 		context.checking(new Expectations() {{
-			exactly(6).of(hardware).dispense(Penny);
+			exactly(6).of(hardware).returnCoin(Penny);
 		}});
 
 		for (int i = 0; i < 6; i++) machine.insertCoin(Penny);
@@ -96,7 +96,7 @@ public class CoinReturnTest {
 
 		context.checking(new Expectations() {{
 			oneOf(hardware).dispense(ChocolateSaltyBalls);
-			never(hardware).dispense(with(any(Coin.class)));
+			never(hardware).returnCoin(with(any(Coin.class)));
 		}});
 
 		for (int i = 0; i < 4; i++) machine.insertCoin(Quarter);

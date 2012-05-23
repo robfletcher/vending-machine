@@ -27,8 +27,8 @@ public class TransactionStoryTest {
 		context.checking(new Expectations() {{
 			oneOf(hardware).dispense(Slurm); inSequence(vending);
 			oneOf(hardware).dispense(ApolloBar); inSequence(vending);
-			oneOf(hardware).dispense(Quarter); inSequence(vending);
-			oneOf(hardware).dispense(Dime); inSequence(vending);
+			oneOf(hardware).returnCoin(Quarter); inSequence(vending);
+			oneOf(hardware).returnCoin(Dime); inSequence(vending);
 		}});
 
 		for (int i = 7; i > 0; i--) machine.insertCoin(Quarter);
