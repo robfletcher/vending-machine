@@ -1,43 +1,32 @@
 package co.freeside.demo.vending;
 
-import java.util.*;
 import org.junit.*;
-import org.junit.runner.*;
-import org.junit.runners.*;
+import static co.freeside.demo.vending.Coin.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static org.junit.runners.Parameterized.*;
 
-@RunWith(Parameterized.class)
 public class CreditTest {
-    
-    public CreditTest(Coin... coins) {
-        this.coins = coins;
-    }
 
-    private VendingMachine machine = new VendingMachine(null);
-    private Coin[] coins;
+	VendingMachine machine = new VendingMachine();
 
-    @Parameters
-    public static Collection<Object[]> data() {
-        Object[][] data = new Coin[][][] {
-            new Coin[][] { { Coin.Penny } },
-            new Coin[][] { { Coin.Nickel } },
-            new Coin[][] { { Coin.Dime, Coin.Quarter } }
-        };
-        return Arrays.asList(data);
-    }
+	@Test
+	public void creditShouldBeZeroWhenNoCoinsAreInserted() {
+		assertThat(machine.readCredit(), equalTo(0));
+	}
 
-    @Test
-    public void insertingCoinsIncrementsCredit() {
-        int expected = 0;
+	@Test
+	public void creditShouldIncrementWhenCoinsAreInserted() {
+		machine.insertCoin(Penny);
 
-        for (Coin coin : coins) {
-            System.out.printf("Inserting %s%n", coin);
-            machine.insertCoin(coin);
-            expected += coin.getValue();
-        }
+		assertThat(machine.readCredit(), equalTo(Penny.getValue()));
+	}
 
-        assertThat(machine.readCredit(), equalTo(expected));
-    }
+	@Test
+	public void creditShouldAccumulateAsMoreCoinsAreInserted() {
+		machine.insertCoin(Nickel);
+		machine.insertCoin(Dime);
+
+		assertThat(machine.readCredit(), equalTo(Nickel.getValue() + Dime.getValue()));
+	}
+
 }

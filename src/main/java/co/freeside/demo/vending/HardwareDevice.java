@@ -5,7 +5,10 @@ package co.freeside.demo.vending;
  */
 public interface HardwareDevice {
 
+	int getStockLevel(Product product);
+
 	void dispense(Product product);
+
 	void returnCoin(Coin coin);
 
 }

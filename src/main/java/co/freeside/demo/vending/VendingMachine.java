@@ -13,6 +13,10 @@ public class VendingMachine {
 	private HardwareDevice hardware;
 	private int credit = 0;
 
+	VendingMachine() {
+		this(null); // useful for tests
+	}
+
 	VendingMachine(HardwareDevice hardware) {
 		this.hardware = hardware;
 	}

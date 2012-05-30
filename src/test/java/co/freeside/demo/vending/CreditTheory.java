@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 @RunWith(Theories.class)
 public class CreditTheory {
 
-    private VendingMachine machine = new VendingMachine(null);
+    private VendingMachine machine = new VendingMachine();
 
     @DataPoints
     public static Coin[][] data() {
@@ -24,7 +24,6 @@ public class CreditTheory {
         int expected = 0;
 
         for (Coin coin : coins) {
-            System.out.printf("Inserting %s%n", coin);
             machine.insertCoin(coin);
             expected += coin.getValue();
         }

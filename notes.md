@@ -1,6 +1,7 @@
 # Test structure
 
 - Separation of given/when/then/cleanup gives real clarity to tests.
+- Arrange, Act, Assert == given, when, then
 
 # Paramaterized tests
 
