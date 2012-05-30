@@ -1,7 +1,11 @@
 package co.freeside.demo.vending;
 
+import java.io.*;
+import java.net.*;
 import java.util.*;
+import java.util.concurrent.*;
 import com.google.common.collect.*;
+import static java.net.HttpURLConnection.HTTP_OK;
 
 /**
  * Represents a vending machine that has various products.
@@ -51,6 +55,7 @@ public class VendingMachine {
 		if (!stock.remove(product)) throw new OutOfStockException(product);
 		credit -= product.getPrice();
 		hardware.dispense(product);
+		transactionLog.add(String.format("%1$tFT%1$tT | %2$s", new Date(), product));
 	}
 
 	/**
@@ -118,4 +123,33 @@ public class VendingMachine {
 		}
 	}
 
+	private URL reportingURL;
+	private Queue<String> transactionLog = new ArrayDeque<>();
+	private ExecutorService reportingThread = Executors.newSingleThreadExecutor();
+
+	public void setReportingURL(String url) throws MalformedURLException {
+		this.reportingURL = new URL(url);
+	}
+
+	public void sendTransactionReport() throws IOException {
+		reportingThread.submit(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					HttpURLConnection connection = (HttpURLConnection) reportingURL.openConnection();
+					connection.setDoOutput(true);
+					Writer writer = new OutputStreamWriter(connection.getOutputStream());
+					while (!transactionLog.isEmpty()) {
+						writer.write(transactionLog.remove());
+					}
+					writer.close();
+
+					assert connection.getResponseCode() == HTTP_OK;
+					connection.getInputStream();
+				} catch (IOException e) {
+					System.err.printf("Reporting thread failed: %s%n", e.getMessage());
+				}
+			}
+		});
+	}
 }
