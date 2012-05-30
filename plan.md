@@ -3,17 +3,24 @@
 ## Intro
 
 - huge advantages to Groovy
-  - applies also to _JUnit_
-  - Closures for assertions - e.g. `assert collection.every { it > x }`
-  - no need to declare exceptions on test methods
+	- applies also to _JUnit_
+	- Closures for assertions - e.g. `assert collection.every { it > x }`
+	- no need to declare exceptions on test methods
 
 ## Basics
 
 ### `StockTest`
 
-- `expect`
-- `when`/`then` vs `given`/`expect`
-- `given`/`when`/`then`
+- structure:
+	- `expect`
+	- `when`/`then` vs `given`/`expect`
+	- `given`/`when`/`then`
+- implicit assertions
+- diagnostics
+	- demo power assert
+- `setup` method
+- labelling blocks
+	- not just comments - retained in bytecode
 
 ## Paramaterization
 
@@ -29,18 +36,19 @@
 
 - data setup is a little easier
 - no separate reporting
-  - this really sucks
-  - _show it breaking_
-  - might as well just use a loop
+	- this really sucks
+	- _show it breaking_
+	- might as well just use a loop
 - again parameters are per class not per test
 
 ### to Spock…
 
 - work up gradually:
-  - start with `where: coins << [...]`
-  - add calculated param
-  - change to table for clarity when using multiple coins
-  - demonstrate @Unroll with report implications
+	- start with `where: coins << [...]`
+	- add calculated param
+	- change to table for clarity when using multiple coins
+	- demonstrate @Unroll with report implications
+	- why `@Unroll` pattern is sometimes better than embedding it in method name
 
 ## Mocks
 
@@ -50,16 +58,31 @@
 - wildcards
 - Closure matchers
 - mock vs stubs
+	- ordering feels more natural for mocks than jMock's up front expectations
 
 ### `TransactionStoryTest`
 
 - ordered interactions
 
-### still to cover…
+### Limitations
 
-- return values
-- throwing exceptions
-- accessing parameters
+- diagnostics not that great when something was called but not the thing you expected
+- cannot do static or partial mocking
+	- could be argued requiring those is a design smell anyway
+
+## Exception handling
+
+### `VendingTest`
+
+- `thrown` and `notThrown`
+- wildcard usage
+
+## The `old` method
+
+### `VendingTest`
+
+- clarity of assertion
+- less brittle
 
 ## Stepwise specifications
 
@@ -71,3 +94,22 @@
 ## Asynchronous testing (if time)
 
 ### `TransactionReportingTest`
+
+## still to cover…
+
+### Lifecycle
+
+- `@Shared`
+- `@AutoCleanup`
+
+### Mocks
+
+- return values
+- throwing exceptions
+- accessing parameters
+- default return
+
+### JUnit compatibility
+
+- `@Rule` support
+- Hamcrest matchers
