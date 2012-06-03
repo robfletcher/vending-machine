@@ -71,4 +71,21 @@ public class VendingTest {
 		assertThat(machine.hasInStock(Slurm), is(false));
 	}
 
+	@Test
+	public void machineKeepsCreditIfDispensingFails() {
+		final HardwareDevice hardware = context.mock(HardwareDevice.class);
+		VendingMachine machine = new VendingMachine(hardware);
+
+		context.checking(new Expectations() {{
+			allowing(hardware).getStockLevel(Slurm); will(returnValue(1));
+			oneOf(hardware).dispense(Slurm); will(throwException(new DispensingFailureException()));
+		}});
+
+		for (int i = 4; i > 0; i--) machine.insertCoin(Quarter);
+		machine.purchase(Slurm);
+
+		context.assertIsSatisfied();
+		assertThat(machine.readCredit(), equalTo(4 * Quarter.getValue()));
+	}
+
 }

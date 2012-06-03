@@ -76,6 +76,7 @@
 
 - `thrown` and `notThrown`
 - wildcard usage
+- mocks throwing exceptions
 
 ## The `old` method
 
@@ -105,9 +106,8 @@
 ### Mocks
 
 - return values
-- throwing exceptions
-- accessing parameters
 - default return
+- accessing parameters
 
 ### JUnit compatibility
 

@@ -52,10 +52,14 @@ public class VendingMachine {
 	 */
 	void purchase(Product product) throws OutOfStockException {
 		if (credit < product.getPrice()) throw new InsufficientCreditException(credit, product);
-		if (!stock.remove(product)) throw new OutOfStockException(product);
-		credit -= product.getPrice();
-		hardware.dispense(product);
-		transactionLog.add(String.format("%1$tFT%1$tT | %2$s", new Date(), product));
+		if (!hasInStock(product)) throw new OutOfStockException(product);
+		try {
+			hardware.dispense(product);
+			credit -= product.getPrice();
+			transactionLog.add(String.format("%1$tFT%1$tT | %2$s", new Date(), product));
+		} catch (DispensingFailureException e) {
+			// display error
+		}
 	}
 
 	/**
