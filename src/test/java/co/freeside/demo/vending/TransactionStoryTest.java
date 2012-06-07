@@ -17,10 +17,7 @@ public class TransactionStoryTest {
 		final HardwareDevice hardware = context.mock(HardwareDevice.class);
 		VendingMachine machine = new VendingMachine(hardware);
 
-		// the machine is well stocked...
-		for (Product product : Product.values()) machine.addStock(10, product);
-
-		// ... and has plenty of change
+		// the machine has plenty of change
 		for (Coin coin : Coin.values()) machine.loadChange(20, coin);
 
 		final Sequence vending = new NamedSequence("vending");
