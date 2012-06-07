@@ -1,10 +1,9 @@
 package co.freeside.demo.vending;
 
-import co.freeside.demo.vending.*;
 import org.jmock.*;
 import org.junit.*;
 import static co.freeside.demo.vending.Coin.*;
-import static co.freeside.demo.vending.Product.ChocolateSaltyBalls;
+import static co.freeside.demo.vending.Product.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 

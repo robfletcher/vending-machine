@@ -1,6 +1,5 @@
 package co.freeside.demo.vending;
 
-import co.freeside.demo.vending.*;
 import org.junit.*;
 import static co.freeside.demo.vending.Coin.*;
 import static org.hamcrest.CoreMatchers.*;
