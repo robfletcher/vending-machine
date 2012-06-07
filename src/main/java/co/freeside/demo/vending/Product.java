@@ -9,8 +9,8 @@ public enum Product {
     private Product(int price) {
         this.price = price;
     }
-    
-    int getPrice() {
+
+	public int getPrice() {
         return price;
     }
     
