@@ -12,7 +12,6 @@ import static java.net.HttpURLConnection.HTTP_OK;
  */
 public class VendingMachine {
 
-	private Multiset<Product> stock = EnumMultiset.create(Product.class);
 	private Multiset<Coin> change = EnumMultiset.create(Coin.class);
 	private HardwareDevice hardware;
 	private int credit = 0;
@@ -25,18 +24,15 @@ public class VendingMachine {
 		this.hardware = hardware;
 	}
 
+	public void setHardware(HardwareDevice hardware) {
+		this.hardware = hardware;
+	}
+
 	/**
 	 * @return the value of all coins that have been inserted.
 	 */
 	public int readCredit() {
 		return credit;
-	}
-
-	/**
-	 * @return `true` if the product is in stock, `false` otherwise.
-	 */
-	public boolean hasInStock(Product product) {
-		return stock.contains(product);
 	}
 
 	/**
@@ -52,36 +48,13 @@ public class VendingMachine {
 	 */
 	public void purchase(Product product) throws OutOfStockException {
 		if (credit < product.getPrice()) throw new InsufficientCreditException(credit, product);
-		if (!hasInStock(product)) throw new OutOfStockException(product);
 		try {
 			hardware.dispense(product);
-			stock.remove(product);
 			credit -= product.getPrice();
 			transactionLog.add(String.format("%1$tFT%1$tT | %2$s", new Date(), product));
-		} catch (DispensingFailureException e) {
+		} catch (OutOfStockException | DispensingFailureException e) {
 			// display error
 		}
-	}
-
-	/**
-	 * Loads stock into the machine.
-	 */
-	public void addStock(Collection<Product> products) {
-		stock.addAll(products);
-	}
-
-	/**
-	 * Loads stock into the machine.
-	 */
-	public void addStock(Product... products) {
-		addStock(Arrays.asList(products));
-	}
-
-	/**
-	 * Loads stock into the machine.
-	 */
-	public void addStock(int num, Product product) {
-		addStock(Collections.nCopies(num, product));
 	}
 
 	/**
