@@ -55,6 +55,7 @@ public class VendingMachine {
 		if (!hasInStock(product)) throw new OutOfStockException(product);
 		try {
 			hardware.dispense(product);
+			stock.remove(product);
 			credit -= product.getPrice();
 			transactionLog.add(String.format("%1$tFT%1$tT | %2$s", new Date(), product));
 		} catch (DispensingFailureException e) {

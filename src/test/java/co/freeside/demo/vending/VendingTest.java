@@ -75,9 +75,9 @@ public class VendingTest {
 	public void machineKeepsCreditIfDispensingFails() {
 		final HardwareDevice hardware = context.mock(HardwareDevice.class);
 		VendingMachine machine = new VendingMachine(hardware);
+		machine.addStock(Slurm);
 
 		context.checking(new Expectations() {{
-			allowing(hardware).getStockLevel(Slurm); will(returnValue(1));
 			oneOf(hardware).dispense(Slurm); will(throwException(new DispensingFailureException()));
 		}});
 
