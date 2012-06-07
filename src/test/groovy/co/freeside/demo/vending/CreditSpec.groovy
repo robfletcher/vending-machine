@@ -2,26 +2,36 @@ package co.freeside.demo.vending
 
 import spock.lang.Specification
 
-import static co.freeside.demo.vending.Coin.*
-import spock.lang.Unroll
+import static co.freeside.demo.vending.Coin.Penny
+import static co.freeside.demo.vending.Coin.Nickel
+import static co.freeside.demo.vending.Coin.Dime
 
-@Unroll
 class CreditSpec extends Specification {
 
 	VendingMachine machine = new VendingMachine()
 
-	void 'inserting #coins increments credit to #expectedValue'() {
+	void 'credit should be zero when no coins are inserted'() {
+		expect:
+		machine.readCredit() == 0
+	}
+
+	void 'credit should increment when coins are inserted'() {
 		when:
-		for (coin in coins) machine.insertCoin(coin)
+		machine.insertCoin(Penny)
 
 		then:
-		machine.readCredit() == expectedValue
+		machine.readCredit() == Penny.value
+	}
 
-		where:
-		coins           | expectedValue
-		[Penny]         | 1
-		[Nickel]        | 5
-		[Dime, Quarter] | 35
+	void 'credit should accumulate as more coins are inserted'() {
+		given:
+		machine.insertCoin(Nickel)
+
+		when:
+		machine.insertCoin(Dime)
+
+		then:
+		machine.readCredit() == [Nickel, Dime].sum { it.value }
 	}
 
 }

@@ -79,9 +79,6 @@ class CoinReturnSpec extends Specification {
 
 	void 'machine retains credit if it cannot make change'() {
 		given:
-		machine.addStock(ChocolateSaltyBalls)
-
-		and:
 		4.times {
 			machine.insertCoin(Quarter)
 		}

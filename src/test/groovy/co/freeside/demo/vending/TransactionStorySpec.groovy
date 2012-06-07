@@ -14,10 +14,7 @@ class TransactionStorySpec extends Specification {
 	HardwareDevice hardware = Mock(HardwareDevice)
 
 	void setupSpec() {
-		// the machine is well stocked...
-		for (product in Product.values()) machine.addStock(10, product)
-
-		// ... and has plenty of change
+		// the machine has plenty of change
 		for (coin in Coin.values()) machine.loadChange(20, coin)
 	}
 
