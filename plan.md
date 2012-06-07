@@ -9,7 +9,7 @@
 
 ## Basics
 
-### `StockTest`
+### `CreditTest`
 
 - structure:
 	- `expect`
@@ -56,21 +56,25 @@
 
 ### `CoinReturnTest`
 
+- asserting invoked
 - asserting never invoked
+- asserting no further invocations
 - wildcards
 - Closure matchers
 - mock vs stubs
 	- ordering feels more natural for mocks than jMock's up front expectations
-
-### `TransactionStoryTest`
-
-- ordered interactions
 
 ### Limitations
 
 - diagnostics not that great when something was called but not the thing you expected
 - cannot do static or partial mocking
 	- could be argued requiring those is a design smell anyway
+
+## `old`
+
+### `VendingTest`
+
+- first test appropriate for `old`
 
 ## Exception handling
 
@@ -79,6 +83,7 @@
 - `thrown` and `notThrown`
 - wildcard usage
 - mocks throwing exceptions
+	- also mocks accessing arguments
 
 ## The `old` method
 
@@ -91,8 +96,13 @@
 
 ### `TransactionStoryTest`
 
-- adds clarity
-- dangers; brittle (people add inappropriate stuff), violation of atomicity (stuff leaks from one test to next), slower to debug
+- `@Shared`
+	- initialization of `@Shared` variables only happens once (show non-shared & test failing)
+	- mocks cannot be `@Shared`
+- `old`
+- `@Stepwise`
+	- adds clarity
+	- dangers; brittle (people add inappropriate stuff), violation of atomicity (stuff leaks from one test to next), slower to debug
 
 ## Asynchronous testing (if time)
 
@@ -102,7 +112,6 @@
 
 ### Lifecycle
 
-- `@Shared`
 - `@AutoCleanup`
 
 ### Mocks
