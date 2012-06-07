@@ -16,10 +16,6 @@ dependencies {
 		exclude module: 'junit-dep'
 	}
 	testCompile 'org.hamcrest:hamcrest-library:1.2.1'
-
-//	testCompile('org.spockframework:spock-core:0.6-groovy-1.8') {
-//		exclude module: 'junit-dep'
-//	}
 }
 
 task wrapper(type: Wrapper) {
