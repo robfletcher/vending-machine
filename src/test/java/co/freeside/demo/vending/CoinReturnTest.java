@@ -11,7 +11,22 @@ public class CoinReturnTest {
 
 	private Mockery context = new Mockery();
 
-    @Test
+	@Test
+	public void machineReturnsCoin() {
+		final HardwareDevice hardware = context.mock(HardwareDevice.class);
+		VendingMachine machine = new VendingMachine(hardware);
+
+		context.checking(new Expectations() {{
+			oneOf(hardware).returnCoin(Penny);
+		}});
+
+		machine.insertCoin(Penny);
+		machine.returnCoins();
+
+		context.assertIsSatisfied();
+	}
+
+	@Test
     public void machineReturnsNoCoinsIfNoneAreInserted() {
 		final HardwareDevice hardware = context.mock(HardwareDevice.class);
 		VendingMachine machine = new VendingMachine(hardware);
@@ -24,21 +39,6 @@ public class CoinReturnTest {
 
 		context.assertIsSatisfied();
 	}
-
-    @Test
-    public void machineReturnsCoin() {
-		final HardwareDevice hardware = context.mock(HardwareDevice.class);
-		VendingMachine machine = new VendingMachine(hardware);
-
-		context.checking(new Expectations() {{
-			oneOf(hardware).returnCoin(Penny);
-		}});
-
-		machine.insertCoin(Penny);
-        machine.returnCoins();
-
-		context.assertIsSatisfied();
-    }
 
     @Test
     public void machineDeductsReturnedCoinFromCredit() {
@@ -92,7 +92,6 @@ public class CoinReturnTest {
 	public void machineRetainsCreditIfItCannotMakeChange() {
 		final HardwareDevice hardware = context.mock(HardwareDevice.class);
 		VendingMachine machine = new VendingMachine(hardware);
-		machine.addStock(ChocolateSaltyBalls);
 
 		context.checking(new Expectations() {{
 			oneOf(hardware).dispense(ChocolateSaltyBalls);

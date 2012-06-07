@@ -43,8 +43,6 @@ public class TransactionReportingTest {
 
 	@Test
 	public void machineSendsTransactionReport() throws InterruptedException, ExecutionException, TimeoutException, IOException {
-		machine.addStock(ApolloBar);
-
 		machine.insertCoin(Quarter);
 		machine.insertCoin(Quarter);
 		machine.insertCoin(Dime);
