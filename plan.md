@@ -15,12 +15,14 @@
 	- `expect`
 	- `when`/`then` vs `given`/`expect`
 	- `given`/`when`/`then`
+	- `and`
 - implicit assertions
 - diagnostics
 	- demo power assert
 - `setup` method
 - labelling blocks
 	- not just comments - retained in bytecode
+- stubs _just work_
 
 ## Paramaterization
 
