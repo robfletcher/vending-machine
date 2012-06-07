@@ -17,32 +17,32 @@ public class VendingMachine {
 	private HardwareDevice hardware;
 	private int credit = 0;
 
-	VendingMachine() {
+	public VendingMachine() {
 		this(null); // useful for tests
 	}
 
-	VendingMachine(HardwareDevice hardware) {
+	public VendingMachine(HardwareDevice hardware) {
 		this.hardware = hardware;
 	}
 
 	/**
 	 * @return the value of all coins that have been inserted.
 	 */
-	int readCredit() {
+	public int readCredit() {
 		return credit;
 	}
 
 	/**
 	 * @return `true` if the product is in stock, `false` otherwise.
 	 */
-	boolean hasInStock(Product product) {
+	public boolean hasInStock(Product product) {
 		return stock.contains(product);
 	}
 
 	/**
 	 * Inserts a coin adding to credit.
 	 */
-	void insertCoin(Coin coin) {
+	public void insertCoin(Coin coin) {
 		change.add(coin);
 		credit += coin.getValue();
 	}
@@ -50,7 +50,7 @@ public class VendingMachine {
 	/**
 	 * Purchases a product, deducting its price from the current credit.
 	 */
-	void purchase(Product product) throws OutOfStockException {
+	public void purchase(Product product) throws OutOfStockException {
 		if (credit < product.getPrice()) throw new InsufficientCreditException(credit, product);
 		if (!hasInStock(product)) throw new OutOfStockException(product);
 		try {
@@ -87,25 +87,25 @@ public class VendingMachine {
 	/**
 	 * Loads change into the machine without adding to credit.
 	 */
-	void loadChange(Collection<Coin> coins) {
+	public void loadChange(Collection<Coin> coins) {
 		this.change.addAll(coins);
 	}
 
 	/**
 	 * Loads change into the machine without adding to credit.
 	 */
-	void loadChange(Coin... coins) {
+	public void loadChange(Coin... coins) {
 		loadChange(Arrays.asList(coins));
 	}
 
 	/**
 	 * Loads change into the machine without adding to credit.
 	 */
-	void loadChange(int num, Coin coin) {
+	public void loadChange(int num, Coin coin) {
 		loadChange(Collections.nCopies(num, coin));
 	}
 
-	void returnCoins() {
+	public void returnCoins() {
 		try {
 			while (credit > 0) {
 				Coin coin = removeLargestCoinFromChange(credit);

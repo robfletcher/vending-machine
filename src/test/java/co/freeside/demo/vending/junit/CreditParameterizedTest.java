@@ -1,6 +1,7 @@
-package co.freeside.demo.vending;
+package co.freeside.demo.vending.junit;
 
 import java.util.*;
+import co.freeside.demo.vending.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;

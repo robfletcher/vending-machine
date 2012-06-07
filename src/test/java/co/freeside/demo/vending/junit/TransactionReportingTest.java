@@ -1,9 +1,10 @@
-package co.freeside.demo.vending;
+package co.freeside.demo.vending.junit;
 
 import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
+import co.freeside.demo.vending.*;
 import com.sun.net.httpserver.*;
 import org.hamcrest.*;
 import org.jmock.*;
