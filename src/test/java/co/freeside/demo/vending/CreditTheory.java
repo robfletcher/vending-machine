@@ -1,4 +1,4 @@
-package co.freeside.demo.vending.junit;
+package co.freeside.demo.vending;
 
 import co.freeside.demo.vending.*;
 import org.junit.experimental.theories.*;

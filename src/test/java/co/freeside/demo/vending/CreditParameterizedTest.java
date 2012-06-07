@@ -1,4 +1,4 @@
-package co.freeside.demo.vending.junit;
+package co.freeside.demo.vending;
 
 import java.util.*;
 import co.freeside.demo.vending.*;
