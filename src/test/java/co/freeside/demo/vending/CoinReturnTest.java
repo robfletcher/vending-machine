@@ -1,6 +1,5 @@
-package co.freeside.demo.vending.junit;
+package co.freeside.demo.vending;
 
-import co.freeside.demo.vending.*;
 import org.jmock.*;
 import org.junit.*;
 import static co.freeside.demo.vending.Coin.*;

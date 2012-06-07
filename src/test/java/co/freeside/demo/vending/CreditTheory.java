@@ -1,6 +1,5 @@
-package co.freeside.demo.vending.junit;
+package co.freeside.demo.vending;
 
-import co.freeside.demo.vending.*;
 import org.junit.experimental.theories.*;
 import org.junit.runner.*;
 import static org.hamcrest.CoreMatchers.equalTo;
