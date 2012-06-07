@@ -1,5 +1,11 @@
+# Machine-specific config
+/gradle.properties
+
+# Gradle artifacts
 /.gradle
 /build
+
+# IntelliJ project artifacts
 /.idea
 /out
 *.ipr
