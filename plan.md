@@ -9,7 +9,7 @@
 
 ## Basics
 
-### `StockTest`
+### `CreditTest`
 
 - structure:
 	- `expect`
