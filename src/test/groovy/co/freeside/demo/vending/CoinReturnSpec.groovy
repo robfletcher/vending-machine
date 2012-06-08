@@ -10,7 +10,7 @@ import static co.freeside.demo.vending.Product.ChocolateSaltyBalls
 
 class CoinReturnSpec extends Specification {
 
-	HardwareDevice hardware = Mock(HardwareDevice)
+	HardwareDevice hardware
 	VendingMachine machine = new VendingMachine(hardware)
 
 	void 'machine returns coin'() {
