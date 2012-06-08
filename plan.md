@@ -7,9 +7,7 @@
 	- Closures for assertions - e.g. `assert collection.every { it > x }`
 	- no need to declare exceptions on test methods
 
-## Basics
-
-### `CreditTest`
+## Basics: `CreditTest` -> `CreditSpec`
 
 - structure:
 	- `expect`
@@ -22,7 +20,6 @@
 - `setup` method
 - labelling blocks
 	- not just comments - retained in bytecode
-- stubs _just work_
 
 ## Paramaterization
 
@@ -43,26 +40,31 @@
 	- might as well just use a loop
 - again parameters are per class not per test
 
-### to Spock…
+### to Spock… `CreditParamaterizedSpec`
 
-- work up gradually:
+- 1st test:
+	- work up gradually:
 	- start with `where: coins << [...]`
 	- add calculated param
-	- change to table for clarity when using multiple coins
 	- demonstrate @Unroll with report implications
 	- why `@Unroll` pattern is sometimes better than embedding it in method name
 
-## Mocks
+### With Spock it's easy to add more paramaterized specs to the same class
 
-### `CoinReturnTest`
+- 2nd test:
+	- show table
 
-- asserting invoked
-- asserting never invoked
-- asserting no further invocations
-- wildcards
-- Closure matchers
-- mock vs stubs
-	- ordering feels more natural for mocks than jMock's up front expectations
+## Mocks: `CoinReturnTest` -> `CoinReturnSpec`
+
+- 1st test:
+	- asserting invoked
+	- asserting no further invocations
+	- wildcard params
+- 2nd test:
+	- asserting never invoked
+- 3rd test:
+	- stubs _just work_
+	- show explicit stub declaration
 
 ### Limitations
 
@@ -70,57 +72,25 @@
 - cannot do static or partial mocking
 	- could be argued requiring those is a design smell anyway
 
-## `old`
+## `VendingTest` -> `VendingSpec`
 
-### `VendingTest`
+- 1st test appropriate for `old`
+	- clarity of assertion
+	- less brittle
+- 2nd test shows:
+	- mocks throwing exceptions
+	- mocks accessing arguments
+- 3rd test shows exception handling using `thrown`
 
-- first test appropriate for `old`
+## `TransactionStoryTest` -> `TransactionStorySpec`
 
-## Exception handling
-
-### `VendingTest`
-
-- `thrown` and `notThrown`
-- wildcard usage
-- mocks throwing exceptions
-	- also mocks accessing arguments
-
-## The `old` method
-
-### `VendingTest`
-
-- clarity of assertion
-- less brittle
-
-## Stepwise specifications
-
-### `TransactionStoryTest`
-
-- `@Shared`
-	- initialization of `@Shared` variables only happens once (show non-shared & test failing)
-	- mocks cannot be `@Shared`
-- `old`
 - `@Stepwise`
 	- adds clarity
 	- dangers; brittle (people add inappropriate stuff), violation of atomicity (stuff leaks from one test to next), slower to debug
+- `@Shared`
+	- initialization of `@Shared` variables only happens once (show non-shared & test failing)
+	- mocks cannot be `@Shared`
 
-## Asynchronous testing (if time)
+### Asynchronous testing: `TransactionReportingTest` -> `TransactionReportingSpec`
 
-### `TransactionReportingTest`
-
-## still to cover…
-
-### Lifecycle
-
-- `@AutoCleanup`
-
-### Mocks
-
-- return values
-- default return
-- accessing parameters
-
-### JUnit compatibility
-
-- `@Rule` support
-- Hamcrest matchers
+- Just show use of `BlockingVariable`
