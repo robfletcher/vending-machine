@@ -1,15 +1,12 @@
 package co.freeside.demo.vending
 
 import spock.lang.Specification
-
-import java.util.concurrent.CountDownLatch
-
+import spock.util.concurrent.BlockingVariable
 import com.sun.net.httpserver.*
 
 import static co.freeside.demo.vending.Coin.*
 import static co.freeside.demo.vending.Product.ApolloBar
 import static java.net.HttpURLConnection.*
-import static java.util.concurrent.TimeUnit.SECONDS
 
 class TransactionReportingSpec extends Specification {
 
@@ -36,26 +33,25 @@ class TransactionReportingSpec extends Specification {
 		machine.purchase(ApolloBar);
 
 		and:
-		def report = []
-		def latch = new CountDownLatch(1)
-		startReportServer(latch, report)
+		def report = new BlockingVariable<List<String>>()
+		startReportServer report
 		machine.reportingURL = 'http://localhost:8082/'
 
 		when:
 		machine.sendTransactionReport()
 
 		then:
-		latch.await(2, SECONDS)
-		report.size() == 1
-		report[0] ==~ /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2} \| ApolloBar/
+		report.get().size() == 1
+		report.get()[0] ==~ /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2} \| ApolloBar/
 	}
 
-	void startReportServer(CountDownLatch latch, List<String> report) {
+	void startReportServer(BlockingVariable<List<String>> report) {
 		def handler = { HttpExchange httpExchange ->
+			def reportLines = []
 			if (httpExchange.requestMethod == 'POST') {
 				httpExchange.requestBody.withReader { reader ->
 					while (reader.ready()) {
-						report << reader.readLine()
+						reportLines << reader.readLine()
 					}
 				}
 				httpExchange.sendResponseHeaders HTTP_OK, 0
@@ -63,7 +59,7 @@ class TransactionReportingSpec extends Specification {
 				httpExchange.sendResponseHeaders HTTP_BAD_METHOD, 0
 			}
 			httpExchange.close()
-			latch.countDown()
+			report.set(reportLines)
 		} as HttpHandler
 		httpServer.createContext('/', handler)
 	}
