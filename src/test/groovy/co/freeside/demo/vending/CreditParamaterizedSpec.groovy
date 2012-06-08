@@ -8,7 +8,6 @@ import spock.lang.Unroll
 import static co.freeside.demo.vending.Product.Slurm
 import static co.freeside.demo.vending.Product.ChocolateSaltyBalls
 
-@Unroll
 class CreditParamaterizedSpec extends Specification {
 
 	VendingMachine machine = new VendingMachine()
