@@ -1,15 +1,12 @@
 package co.freeside.demo.vending
 
 import spock.lang.Specification
-
-import java.util.concurrent.CountDownLatch
-
+import spock.util.concurrent.BlockingVariable
 import com.sun.net.httpserver.*
 
 import static co.freeside.demo.vending.Coin.*
 import static co.freeside.demo.vending.Product.ApolloBar
 import static java.net.HttpURLConnection.*
-import spock.util.concurrent.BlockingVariable
 
 class TransactionReportingSpec extends Specification {
 
