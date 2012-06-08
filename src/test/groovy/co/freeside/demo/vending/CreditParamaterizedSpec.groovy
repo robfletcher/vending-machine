@@ -13,7 +13,7 @@ class CreditParamaterizedSpec extends Specification {
 
 	VendingMachine machine = new VendingMachine()
 
-	void 'inserting #coins increments credit to #expectedValue'() {
+	void 'inserting coins increments credit'() {
 	}
 
 	void 'purchasing products deducts credit'() {
