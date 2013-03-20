@@ -1,17 +1,17 @@
 package co.freeside.demo.vending
 
-import spock.lang.Specification
-
+import spock.lang.*
 import static co.freeside.demo.vending.Coin.*
-import spock.lang.Unroll
-
-import static co.freeside.demo.vending.Product.Slurm
-import static co.freeside.demo.vending.Product.ChocolateSaltyBalls
+import static co.freeside.demo.vending.Product.*
 
 @Unroll
 class CreditParamaterizedSpec extends Specification {
 
-	VendingMachine machine = new VendingMachine()
+	def machine = new VendingMachine()
+
+	void setup() {
+		machine.hardware = Stub(HardwareDevice)
+	}
 
 	void 'inserting #coins increments credit to #expectedValue'() {
 		when:
@@ -33,12 +33,15 @@ class CreditParamaterizedSpec extends Specification {
 		for (product in products) machine.purchase(product)
 
 		then:
-		machine.readCredit() == old(machine.readCredit()) - products.sum { it.price }
+		machine.readCredit() == totalInserted - totalSpent
 
 		where:
-		coins                           | products
-		4 * [Quarter]                   | [Slurm]
-		(3 * [Quarter]) + (10 * [Dime]) | [ChocolateSaltyBalls, Slurm]
+		coins                       | products
+		[Quarter] * 4               | [Slurm]
+		[Quarter] * 3 + [Dime] * 10 | [ChocolateSaltyBalls, Slurm]
+
+		totalInserted = coins.sum { it.value }
+		totalSpent = products.sum { it.price }
 	}
 
 }

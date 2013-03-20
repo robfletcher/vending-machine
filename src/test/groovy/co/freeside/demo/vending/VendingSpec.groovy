@@ -1,14 +1,13 @@
 package co.freeside.demo.vending
 
 import spock.lang.Specification
-
 import static co.freeside.demo.vending.Coin.Quarter
 import static co.freeside.demo.vending.Product.Slurm
 
 class VendingSpec extends Specification {
 
-	HardwareDevice hardware = Mock(HardwareDevice)
-	VendingMachine machine = new VendingMachine(hardware)
+	def hardware = Mock(HardwareDevice)
+	def machine = new VendingMachine(hardware)
 
 	void 'machine dispenses product and deducts price from credit'() {
 		given:

@@ -1,17 +1,14 @@
 package co.freeside.demo.vending
 
 import spock.lang.*
-
-import static co.freeside.demo.vending.Coin.Quarter
-import static co.freeside.demo.vending.Product.Slurm
-import static co.freeside.demo.vending.Product.ApolloBar
-import static co.freeside.demo.vending.Coin.Dime
+import static co.freeside.demo.vending.Coin.*
+import static co.freeside.demo.vending.Product.*
 
 @Stepwise
 class TransactionStorySpec extends Specification {
 
-	@Shared VendingMachine machine = new VendingMachine()
-	HardwareDevice hardware = Mock(HardwareDevice)
+	@Shared def machine = new VendingMachine()
+	def hardware = Mock(HardwareDevice)
 
 	void setupSpec() {
 		// the machine has plenty of change

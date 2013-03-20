@@ -10,8 +10,8 @@ import static java.net.HttpURLConnection.*
 
 class TransactionReportingSpec extends Specification {
 
-	HardwareDevice hardware = Mock(HardwareDevice)
-	VendingMachine machine = new VendingMachine(hardware)
+	def hardware = Mock(HardwareDevice)
+	def machine = new VendingMachine(hardware)
 	HttpServer httpServer
 
 	void setup() {

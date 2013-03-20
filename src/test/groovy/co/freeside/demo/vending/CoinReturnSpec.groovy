@@ -1,17 +1,13 @@
 package co.freeside.demo.vending
 
 import spock.lang.Specification
-
-import static co.freeside.demo.vending.Coin.Penny
-import static co.freeside.demo.vending.Coin.Quarter
-import static co.freeside.demo.vending.Coin.Dime
-import static co.freeside.demo.vending.Coin.Nickel
+import static co.freeside.demo.vending.Coin.*
 import static co.freeside.demo.vending.Product.ChocolateSaltyBalls
 
 class CoinReturnSpec extends Specification {
 
-	HardwareDevice hardware = Mock(HardwareDevice)
-	VendingMachine machine = new VendingMachine(hardware)
+	def hardware = Mock(HardwareDevice)
+	def machine = new VendingMachine(hardware)
 
 	void 'machine returns coin'() {
 		given:
@@ -58,10 +54,12 @@ class CoinReturnSpec extends Specification {
 		machine.returnCoins()
 
 		then:
-		1 * hardware.returnCoin(Dime)
-		1 * hardware.returnCoin(Nickel)
-		2 * hardware.returnCoin(Penny)
-		0 * hardware.returnCoin(_)
+		with(hardware) {
+			1 * returnCoin(Dime)
+			1 * returnCoin(Nickel)
+			2 * returnCoin(Penny)
+			0 * returnCoin(_)
+		}
 	}
 
 	void 'machine returns available change'() {
