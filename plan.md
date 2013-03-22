@@ -121,3 +121,4 @@
 - Returning things from mocks
 	- sequential return values
 - Global mocks
+- Grouping stuff using `with`
