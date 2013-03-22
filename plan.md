@@ -9,60 +9,60 @@
 
 ## Basics: `CreditTest` -> `CreditSpec`
 
-- structure:
-	- `expect`
-	- `when`/`then` vs `given`/`expect`
-	- `given`/`when`/`then`
-	- `and`
-- implicit assertions
-- diagnostics
-	- demo power assert
-- `setup` method
-- labelling blocks
-	- not just comments - retained in bytecode
+1. show `expect`
+	* implicit assertion
+	* show power assert diagnostic
+2. show `when`/`then`
+	* _prepare, act, assert_: `when` is the _act_, `then` is the _assert_
+3. show `given`
+	* discuss `when`/`then` vs `given`/`expect`
+	* explain `and`
+	
+Discuss…
+
+* `setup` method
+* labelling blocks
+	* not just comments - retained in bytecode
 
 ## Paramaterization
 
-- one of the most painful things in JUnit
+* one of the most painful things in JUnit
 
 ### `CreditParamaterizedTest`
 
-- behaviour of data setup method is complex 
-	- how many dimensions in that array?
-- results are reported separately but no description
-- cannot use different parameters for different test methods
+* behaviour of data setup method is complex 
+	* how many dimensions in that array?
+* results are reported separately but no description
+* cannot use different parameters for different test methods
 
 ### `CreditTheory`
 
-- data setup is a little easier
-- no separate reporting
-	- this really sucks
-	- _show it breaking_; change `insert(coin)` to `insert(coins[0])`
-	- might as well just use a loop
-- again parameters are per class not per test
+* data setup is a little easier
+* no separate reporting
+	* this really sucks
+	* _show it breaking_; change `insert(coin)` to `insert(coins[0])`
+	* might as well just use a loop
+* again parameters are per class not per test
 
 ### to Spock… `CreditParamaterizedSpec`
 
-- 1st test:
-	- work up gradually:
-	- start with `where: coins << [...]`
-		- can be any `Iterable`, e.g. method call
-	- add calculated param
-	- demonstrate @Unroll
-		- at method level with auto-complete in pattern
-		- report implications
-		- move pattern to method name
-		- move `@Unroll` to class
-		- why `@Unroll` pattern is sometimes better than embedding it in method name
+1. data pipe
+	* can be any `Iterable`, e.g. a method call
+	* add calculated param
+	* show `@Unroll`
+		* at method level with auto-complete in pattern
+		* report implications
+		* move pattern to method name
+		* move `@Unroll` to class
+		* why `@Unroll` pattern is sometimes better than embedding it in method name
+2. data table 
+	* start with calculations in spec
+	* don't use `old`… yet
+	* move calculated values to `where` block mixed with table
+	
+Discuss…
 
-### With Spock it's easy to add more paramaterized specs to the same class
-
-- 2nd test:
-	- show table 
-		- keep calculations in spec
-	- don't use `old`… yet
-	- move calculated values to `where` block mixed with table
-- even when not iterating `where` blocks can clarify test inputs and outputs
+* even when not iterating `where` blocks can clarify test inputs and outputs
 
 ## Mocks: `CoinReturnTest` -> `CoinReturnSpec`
 
