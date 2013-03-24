@@ -64,7 +64,7 @@ class CoinReturnSpec extends Specification {
 
 	void 'machine returns available change'() {
 		given:
-		6.times {
+		numCoins.times {
 			machine.insertCoin(Penny)
 		}
 
@@ -72,7 +72,10 @@ class CoinReturnSpec extends Specification {
 		machine.returnCoins()
 
 		then:
-		6 * hardware.returnCoin(Penny)
+		numCoins * hardware.returnCoin(Penny)
+
+		where:
+		numCoins = 6
 	}
 
 	void 'machine retains credit if it cannot make change'() {
