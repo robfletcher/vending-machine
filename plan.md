@@ -2,10 +2,10 @@
 
 ## Intro
 
-- general advantages to Groovy
-	- apply also to _JUnit_
-	- Closures for assertions - e.g. `assert collection.every { it > x }`
-	- no need to declare exceptions on test methods
+* general advantages to Groovy
+	* apply also to _JUnit_
+	* Closures for assertions - e.g. `assert collection.every { it > x }`
+	* no need to declare exceptions on test methods
 
 ## Basics: `CreditTest` -> `CreditSpec`
 
@@ -66,59 +66,59 @@ Discuss…
 
 ## Mocks: `CoinReturnTest` -> `CoinReturnSpec`
 
-- 1st test:
-	- asserting invoked
-	- asserting no further invocations
-	- wildcard params
-- 2nd test:
-	- asserting never invoked
-- 3rd test:
-	- stubs _just work_
-	- show explicit stub declaration
-- 4th test:
-	- grouping assertions using `with`
+1. 1st test:
+	* asserting invoked
+		* show expectation failing
+	* asserting no further invocations
+	* wildcard params (show variations)
+2. 2nd test:
+	* asserting never invoked
+3. 3rd test:
+	* lenient not strict; stubs _just work_
+	* show explicit stub declaration `given: hardware.returnCoin(Penny)`
+4. 4th test:
+	* grouping assertions using `with`
+
+Discuss…
 	
-- show expectation failures
-- explain `Stub` 
-	- for clarity only; you can stub with a `Mock`
-- explain `Spy` 
-	- evil but helpful especially in legacy
-	- must be a class not an interface
-	- can act as "partial" mocks
-
-### Limitations
-
-- cannot do static or partial mocking
-	- could be argued requiring those is a design smell anyway
+* explain `Stub` 
+	* for clarity only; you can stub with a `Mock`
+* explain `Spy` 
+	* evil but helpful especially in legacy
+	* must be a class not an interface
+	* can act as "partial" mocks
+* Limitations
+	* cannot do static or partial mocking
+	* could be argued requiring those is a design smell anyway
 
 ## `VendingTest` -> `VendingSpec`
 
-- 1st test appropriate for `old`
-	- clarity of assertion
-	- less brittle
-- 2nd test shows:
-	- mocks throwing exceptions
-	- mocks accessing arguments
-- 3rd test shows exception handling using `thrown`
+1. `old`
+	* clarity of assertion
+	* less brittle
+2. action closures
+	* mocks throwing exceptions
+	* mocks accessing arguments
+3. exception handling using `thrown`
 
 ## `TransactionStoryTest` -> `TransactionStorySpec`
 
-- `@Stepwise`
-	- adds clarity
-	- dangers; brittle (people add inappropriate stuff), violation of atomicity (stuff leaks from one test to next), slower to debug
-- `@Shared`
-	- initialization of `@Shared` variables only happens once (show non-shared & test failing)
-	- mocks cannot be `@Shared`
+* `@Stepwise`
+	* adds clarity
+	* dangers; brittle (people add inappropriate stuff), violation of atomicity (stuff leaks from one test to next), slower to debug
+* `@Shared`
+	* initialization of `@Shared` variables only happens once (show non-shared & test failing)
+	* mocks cannot be `@Shared`
 
 ### Asynchronous testing: `TransactionReportingTest` -> `TransactionReportingSpec`
 
-- Just show use of `BlockingVariable`
+* Just show use of `BlockingVariable`
 
 ## New stuff to cover
 
-- Interaction closure on `Mock` declaration
-- Multiple `then` blocks to enforce interaction order
-- Returning things from mocks
-	- sequential return values
-- Global mocks
-- Grouping stuff using `with`
+* Interaction closure on `Mock` declaration
+* Multiple `then` blocks to enforce interaction order
+* Returning things from mocks
+	* sequential return values
+* Global mocks
+* Different default returns from stubs
