@@ -1,27 +1,15 @@
 apply plugin: 'groovy'
-apply plugin: 'idea'
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
-	groovy 'org.codehaus.groovy:groovy-all:1.8.6'
+	groovy 'org.codehaus.groovy:groovy-all:2.1.2'
 
-    compile 'com.google.guava:guava:12.0'
+	compile 'com.google.guava:guava:14.0.1'
 
-	testCompile('org.spockframework:spock-core:0.6-groovy-1.8') {
-		exclude module: 'groovy-all'
-	}
-	testCompile('org.jmock:jmock-junit4:2.5.1') {
-		exclude module: 'hamcrest-library'
-		exclude module: 'hamcrest-core'
-		exclude module: 'junit-dep'
-	}
-	testCompile 'org.hamcrest:hamcrest-library:1.2.1'
-
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.0-rc-3'
+	testCompile 'org.spockframework:spock-core:0.7-groovy-2.0',
+				'org.jmock:jmock-junit4:2.6.0',
+				'org.hamcrest:hamcrest-library:1.3'
 }
