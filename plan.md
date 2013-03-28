@@ -34,6 +34,7 @@ Discuss…
 	* how many dimensions in that array?
 * results are reported separately but no description
 * cannot use different parameters for different test methods
+	* okay, you can in recent versions with `@DataProvider`
 
 ### `CreditTheory`
 
@@ -48,7 +49,7 @@ Discuss…
 
 1. data pipe
 	* can be any `Iterable`, e.g. a method call
-	* add calculated param
+	* add calculated param `expectedValue`
 	* show `@Unroll`
 		* at method level with auto-complete in pattern
 		* report implications
@@ -59,7 +60,18 @@ Discuss…
 	* start with calculations in spec
 	* don't use `old`… yet
 	* move calculated values to `where` block mixed with table
+
+Where…
+
+	where:
+	coins                       | products
+	[Quarter] * 4               | [Slurm]
+	[Quarter] * 3 + [Dime] * 10 | [ChocolateSaltyBalls, Slurm]
 	
+	totalInserted = coins.sum { it.value }
+	totalSpent = products.sum { it.price }
+
+
 Discuss…
 
 * even when not iterating `where` blocks can clarify test inputs and outputs
@@ -69,11 +81,15 @@ Discuss…
 1. 1st test:
 	* asserting invoked
 		* show expectation failing
+	* mocks are lenient - add extra coin return to CUT & test still passes
 	* asserting no further invocations
 	* wildcard params (show variations)
+	* method matching; regex, wildcard
+	* all mocks wildcard: `0 * _._`… `0 * _`
 2. 2nd test:
 	* asserting never invoked
 3. 3rd test:
+	* stubs
 	* lenient not strict; stubs _just work_
 	* show explicit stub declaration `given: hardware.returnCoin(Penny)`
 4. 4th test:
